@@ -16,3 +16,17 @@ Content-Type: application/json
   "email": "content@gmail.com",
   "password": "Kaushalya4255#"
 }
+
+###
+POST http://localhost:8080/api/v1/tasks/register
+Content-Type: application/json
+
+{
+  "taskName": "Work From Home",
+  "userId": "00000000-0000-0000-0000-000000000000",
+  "description": "hellow mage raththaran yaluwane"
+}
+
+###
+GET http://localhost:8080/api/v1/tasks/user/00000000-0000-0000-0000-000000000000
+Accept: application/json

@@ -4,6 +4,7 @@ import com.todoapp.todo.domain.dto.CreateTaskRequest;
 import com.todoapp.todo.domain.dto.CreateTaskResponse;
 import com.todoapp.todo.domain.entity.TaskLIst;
 import com.todoapp.todo.domain.entity.User;
+import com.todoapp.todo.mapper.TaskMapper;
 import com.todoapp.todo.repo.TaskRepo;
 import com.todoapp.todo.repo.UserRepo;
 import com.todoapp.todo.service.TaskService;
@@ -20,9 +21,10 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskRepo taskRepo;
     private final UserRepo userRepo;
+    private final TaskMapper taskMapper;
 
     @Override
-    public CreateTaskResponse createTask(CreateTaskRequest request) {
+    public TaskLIst createTask(TaskLIst request) {
         User user = userRepo.findById(request.getUserId()).orElseThrow(()->new IllegalArgumentException("User not found"));
 
         TaskLIst task = TaskLIst.builder()
@@ -32,7 +34,7 @@ public class TaskServiceImpl implements TaskService {
                 .build();
 
         TaskLIst savedTask = taskRepo.save(task);
-        return mapToResponse(savedTask);
+        return savedTask;
     }
 
     @Override
@@ -42,7 +44,6 @@ public class TaskServiceImpl implements TaskService {
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
-
 
     private CreateTaskResponse mapToResponse(TaskLIst task) {
         CreateTaskResponse response = new CreateTaskResponse();
